@@ -1,0 +1,37 @@
+<!doctype html><html lang=en><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1">
+<title>Find Work Now — Ad</title>
+<style>
+*{box-sizing:border-box}html,body{height:100%;margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:#0b0f1a;color:#fff}
+.stage{display:grid;place-items:center;min-height:100%}
+.card{width:min(1000px,92vw);aspect-ratio:16/9;position:relative;overflow:hidden;border-radius:18px;background:#0b0f1a;border:1px solid #ffffff22;box-shadow:0 30px 80px #0009}
+.bg,.orb{position:absolute;inset:0}
+.bg{background:radial-gradient(60% 60% at 20% 30%,#3e7cff33,transparent 60%),radial-gradient(50% 50% at 80% 70%,#00e6a833,transparent 60%),linear-gradient(120deg,#0b0f1a,#141a2a);animation:float 12s ease-in-out infinite alternate}
+@keyframes float{to{transform:scale(1.04) translateY(-8px) hue-rotate(20deg)}}
+.scan{pointer-events:none;position:absolute;inset:0;background-image:linear-gradient(#fff1 1px,transparent 1px),linear-gradient(90deg,#fff0 1px,transparent 1px);background-size:100% 3px,3px 100%;mix-blend-mode:overlay;animation:pulse 3s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.16}}.center{position:absolute;inset:0;display:grid;place-items:center;padding:2.2vw;text-align:center}
+.k{font-size:clamp(12px,2.2vw,16px);letter-spacing:.18em;text-transform:uppercase;opacity:.85}
+.h{margin:.6em 0 0;font-weight:900;line-height:1.05;font-size:clamp(28px,6.4vw,72px);text-shadow:0 10px 30px #0008}
+.h b{background:linear-gradient(180deg,#00ffc8,#00d6a6);-webkit-background-clip:text;background-clip:text;color:transparent}
+.s{margin-top:.5em;font-size:clamp(14px,2.6vw,20px);opacity:.92}
+.btn{display:inline-flex;align-items:center;gap:.5em;margin-top:1em;padding:.9em 1.2em;border-radius:14px;text-decoration:none;font-weight:800;letter-spacing:.02em;background:linear-gradient(180deg,#00ffc8,#00d6a6);color:#062b24;box-shadow:0 10px 30px #00ffc83f,inset 0 -6px 0 #0002}
+.gh{border:1px solid #ffffff33;background:#ffffff10;color:#fff;border-radius:12px;padding:.7em 1em;margin-left:.6em}
+.scene{opacity:0;transform:translateY(8px) scale(.985);transition:opacity .5s,transform .5s;position:absolute;inset:0;display:grid;place-items:center}
+.scene.a{opacity:1;transform:none}
+.p{height:6px;background:#ffffff26;border-radius:999px;overflow:hidden;margin:6px auto;width:min(80%,700px);position:absolute;left:10%;right:10%;bottom:14px}
+.pb{height:100%;width:0;background:linear-gradient(90deg,#6aa3ff,#00ffc8);transition:width .25s linear}
+</style>
+<div class=stage><div class=card role=region aria-label="Find Work Now promotional animation">
+<div class=bg></div><div class=scan></div>
+<div class=center>
+<div class="scene a" data-d=2200><div><div class=k>No Experience? No Problem.</div><div class=h>Find Work <b>Fast</b></div><div class=s>Flexible gigs • Full-time • Remote & local</div><div><a class=btn href="https://example.com/jobs" target=_blank rel=noopener>Find Work Now ➜</a><button class=gh id=v>🔊 Voiceover</button></div></div></div>
+<div class=scene data-d=2200><div><div class=k>Step 1</div><div class=h>Tell us what you’re good at</div><div class=s>Pick skills—construction, driving, retail, admin, more.</div></div></div>
+<div class=scene data-d=2200><div><div class=k>Step 2</div><div class=h>Match with real openings</div><div class=s>Roles paying today, near you or remote.</div></div></div>
+<div class=scene data-d=2400><div><div class=k>Step 3</div><div class=h>Apply in minutes</div><div class=s>One simple profile. Interview faster.</div></div></div>
+<div class=scene data-d=2600><div><div class=k>Ready?</div><div class=h>Start earning this week</div><div class=s>Tap the button—jobs are waiting.</div><div><a class=btn href="https://example.com/jobs" target=_blank rel=noopener>Find Work Now ➜</a></div></div></div>
+</div><div class=p><div class=pb id=pb></div></div></div></div>
+<script>
+const sc=[...document.querySelectorAll('.scene')],pb=document.getElementById('pb'),v=document.getElementById('v');const d=sc.map(s=>+s.dataset.d||2e3),T=d.reduce((a,b)=>a+b,0);let t=0,i=0,last=performance.now(),playing=true;function set(k){sc.forEach((s,j)=>s.className='scene'+(j===k?' a':''))}
+function step(now){const dt=now-last;last=now;if(playing){t+=dt;let acc=0,idx=0;for(let k=0;k<d.length;k++){acc+=d[k];if(t<=acc){idx=k;break}idx=k}set(idx);pb.style.width=Math.min(100,t/T*100)+'%';if(t>=T){playing=false;setTimeout(()=>{t=0;set(0);pb.style.width='0%'},500)}}requestAnimationFrame(step)}requestAnimationFrame(step);
+const lines=["Find work fast. No experience? No problem.","Step one: tell us what you're good at.","Step two: match with real openings near you or remote.","Step three: apply in minutes.","Start earning this week. Tap Find Work Now."];
+v.onclick=()=>{if(!('speechSynthesis'in window))return alert('Voiceover not supported');speechSynthesis.cancel();const pick=()=>{const vs=speechSynthesis.getVoices()||[];const male=[/Male/i,/David/i,/Daniel/i,/George/i,/Guy/i,/Alex/i];return vs.find(x=>/en/i.test(x.lang)&&male.some(r=>r.test(x.name)))||vs.find(x=>/en/i.test(x.lang))};const voice=pick();lines.forEach((L,k)=>{const u=new SpeechSynthesisUtterance(L);if(voice)u.voice=voice;u.rate=1.02;u.pitch=.92;setTimeout(()=>speechSynthesis.speak(u),k*60)})};
+</script>
