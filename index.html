@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Find Work Now — Animated Ad</title>
+<style>
+  /* --- Base --- */
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:#fff;background:#0b0f1a}
+  .wrap{display:grid;place-items:center;min-height:100vh;padding:clamp(12px,3vw,32px)}
+  .card{width:min(1000px,94vw);aspect-ratio:16/9;position:relative;border-radius:22px;overflow:hidden;
+        border:1px solid #ffffff1f;background:#0b0f1abf;box-shadow:0 30px 80px rgba(0,0,0,.6)}
+
+  /* --- Background glow + scanlines --- */
+  .bg{position:absolute;inset:0;z-index:-1;
+      background:radial-gradient(60% 60% at 20% 30%,#3e7cff55,transparent 60%),
+                 radial-gradient(50% 50% at 80% 70%,#00e6a855,transparent 60%),
+                 linear-gradient(120deg,#0b0f1a,#141a2a);
+      animation:floatGlow 12s ease-in-out infinite alternate}
+  @keyframes floatGlow{to{transform:scale(1.05) translateY(-8px) hue-rotate(20deg)}}
+  .scan{pointer-events:none;position:absolute;inset:0;z-index:1;
+        background-image:linear-gradient(#fff3 1px,transparent 1px),linear-gradient(90deg,#fff1 1px,transparent 1px);
+        background-size:100% 3px,3px 100%;mix-blend-mode:overlay;animation:pulse 3s ease-in-out infinite}
+  @keyframes pulse{50%{opacity:.18}}
+
+  /* --- Scenes like video cuts --- */
+  .stage{position:absolute;inset:0;display:grid;place-items:center;padding:clamp(12px,3vw,32px);text-align:center}
+  .scene{position:absolute;inset:0;display:grid;place-items:center;opacity:0;transform:translateY(8px) scale(.985);
+         transition:opacity .55s ease, transform .55s ease}
+  .scene.active{opacity:1;transform:none}
+  .kicker{font-size:clamp(12px,2.2vw,16px);letter-spacing:.18em;text-transform:uppercase;opacity:.85}
+  .headline{margin:.55em 0 0;font-weight:900;line-height:1.05;font-size:clamp(28px,6.4vw,72px);text-shadow:0 10px 30px #0008}
+  .accent{background:linear-gradient(180deg,#00ffc8,#00d6a6);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{margin-top:.6em;font-size:clamp(14px,2.6vw,20px);opacity:.92}
+
+  /* --- CTA + controls --- */
+  .ctaRow{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:1.1em}
+  .cta{appearance:none;border:none;cursor:pointer;font-weight:800;letter-spacing:.02em;
+       padding:.95em 1.25em;border-radius:14px;background:linear-gradient(180deg,#00ffc8,#00d6a6);
+       color:#062b24;text-decoration:none;display:inline-flex;align-items:center;gap:.5em;
+       box-shadow:0 14px 36px rgba(0,255,200,.25), inset 0 -6px 0 rgba(0,0,0,.14)}
+  .ghost{appearance:none;border:1px solid #ffffff33;background:#ffffff12;color:#fff;padding:.85em 1.1em;border-radius:12px;cursor:pointer;backdrop-filter:blur(6px)}
+  .footer{position:absolute;left:0;right:0;bottom:0;display:flex;gap:8px;align-items:center;justify-content:space-between;
+          padding:10px 12px;background:linear-gradient(180deg,transparent,rgba(0,0,0,.35))}
+  .controls{display:flex;gap:8px;flex-wrap:wrap}
+  .progress{height:6px;background:#ffffff22;border-radius:999px;overflow:hidden;margin:0 8px;flex:1}
+  .bar{height:100%;width:0;background:linear-gradient(90deg,#6aa3ff,#00ffc8);transition:width .3s linear}
+
+  @media (prefers-reduced-motion: reduce){
+    .bg,.scan,.scene{animation:none !important;transition:none !important}
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card" role="region" aria-label="Find Work Now promotional animation">
+      <div class="bg"></div>
+      <div class="scan"></div>
+
+      <div class="stage">
+        <!-- Scene 1 -->
+        <section class="scene active" data-duration="2200">
+          <div>
+            <div class="kicker">No Experience? No Problem.</div>
+            <h1 class="headline">Find Work <span class="accent">Fast</span></h1>
+            <div class="sub">Flexible gigs • Full-time roles • Remote & local</div>
+            <div class="ctaRow">
+              <!-- 👉 Replace the href below with your real destination -->
+              <a class="cta" href="https://example.com/jobs" target="_blank" rel="noopener">Find Work Now ➜</a>
+              <button class="ghost" id="voiceBtn" aria-pressed="false">🔊 Voiceover</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Scene 2 -->
+        <section class="scene" data-duration="2200">
+          <div>
+            <div class="kicker">Step 1</div>
+            <h1 class="headline">Tell us what you’re good at</h1>
+            <div class="sub">Pick your skills—construction, driving, retail, admin, and more.</div>
+          </div>
+        </section>
+
+        <!-- Scene 3 -->
+        <section class="scene" data-duration="2200">
+          <div>
+            <div class="kicker">Step 2</div>
+            <h1 class="headline">Match with real openings</h1>
+            <div class="sub">We surface roles paying today, near you or remote.</div>
+          </div>
+        </section>
+
+        <!-- Scene 4 -->
+        <section class="scene" data-duration="2400">
+          <div>
+            <div class="kicker">Step 3</div>
+            <h1 class="headline">Apply in minutes</h1>
+            <div class="sub">One simple profile. Interview faster.</div>
+          </div>
+        </section>
+
+        <!-- Scene 5 -->
+        <section class="scene" data-duration="2600">
+          <div>
+            <div class="kicker">Ready?</div>
+            <h1 class="headline">Start earning this week</h1>
+            <div class="sub">Tap the button—jobs are waiting.</div>
+            <div class="ctaRow">
+              <a class="cta" href="https://example.com/jobs" target="_blank" rel="noopener">Find Work Now ➜</a>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Footer controls -->
+      <div class="footer" aria-label="Playback controls">
+        <div class="controls">
+          <button class="ghost" id="playBtn">⏵ Play</button>
+          <button class="ghost" id="pauseBtn">⏸ Pause</button>
+          <button class="ghost" id="replayBtn">↺ Replay</button>
+        </div>
+        <div class="progress" aria-label="Progress"><div class="bar" id="bar"></div></div>
+        <div style="opacity:.8;font-size:12px;">Single-file • No branding</div>
+      </div>
+    </div>
+  </div>
+
+<script>
+/* ===== Simple Scene Player ===== */
+(function(){
+  const scenes = [...document.querySelectorAll('.scene')];
+  const durations = scenes.map(s => +s.dataset.duration || 2000);
+  const total = durations.reduce((a,b)=>a+b,0);
+
+  const bar = document.getElementById('bar');
+  const playBtn = document.getElementById('playBtn');
+  const pauseBtn = document.getElementById('pauseBtn');
+  const replayBtn = document.getElementById('replayBtn');
+  const voiceBtn = document.getElementById('voiceBtn');
+
+  let t = 0, playing = true, last = performance.now();
+
+  function setScene(idx){ scenes.forEach((s,i)=>s.classList.toggle('active', i===idx)); }
+
+  function step(now){
+    const dt = now - last; last = now;
+    if (playing) t += dt;
+
+    // progress
+    bar.style.width = Math.min(100, (t/total)*100) + '%';
+
+    // which scene?
+    let acc = 0, idx = 0;
+    for (let i=0;i<durations.length;i++){
+      acc += durations[i];
+      if (t <= acc){ idx = i; break; }
+      if (i === durations.length-1) idx = i;
+    }
+    setScene(idx);
+
+    // loop stop
+    if (t >= total){ playing = false; setTimeout(()=>{t=0; setScene(0); bar.style.width='0%';}, 600); }
+
+    requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+
+  playBtn.onclick = ()=> playing = true;
+  pauseBtn.onclick = ()=> playing = false;
+  replayBtn.onclick = ()=> { t = 0; playing = true; bar.style.width='0%'; setScene(0); };
+
+  /* ===== Voiceover (preview) ===== */
+  const lines = [
+    "Find work fast. No experience? No problem.",
+    "Step one: tell us what you're good at.",
+    "Step two: match with real openings near you, or remote.",
+    "Step three: apply in minutes.",
+    "Start earning this week. Tap Find Work Now."
+  ];
+  function speak(){
+    if (!('speechSynthesis' in window)) { alert('Voiceover not supported in this browser.'); return; }
+    speechSynthesis.cancel();
+    const pick = () => {
+      const vs = speechSynthesis.getVoices() || [];
+      const maleHints = [/Male/i,/David/i,/Daniel/i,/George/i,/Guy\b/i,/Alex\b/i];
+      return vs.find(v => /en/i.test(v.lang) && maleHints.some(r=>r.test(v.name))) || vs.find(v=>/en/i.test(v.lang));
+    };
+    const voice = pick();
+    lines.forEach((line,i)=>{
+      const u = new SpeechSynthesisUtterance(line);
+      if (voice) u.voice = voice;
+      u.rate = 1.02; u.pitch = 0.92; u.volume = 1;
+      setTimeout(()=>speechSynthesis.speak(u), i*60);
+    });
+  }
+  voiceBtn.addEventListener('click', ()=>{
+    const on = voiceBtn.getAttribute('aria-pressed') !== 'true';
+    voiceBtn.setAttribute('aria-pressed', String(on));
+    voiceBtn.textContent = on ? '🔊 Voiceover (On)' : '🔇 Voiceover (Off)';
+    if (on){
+      if (speechSynthesis.getVoices().length === 0){
+        speechSynthesis.onvoiceschanged = speak; speechSynthesis.getVoices();
+      } else { speak(); }
+    } else { speechSynthesis.cancel(); }
+  });
+
+  // stop voice if tab hidden
+  document.addEventListener('visibilitychange', ()=> { if (document.hidden) speechSynthesis.cancel(); });
+})();
+</script>
+</body>
+</html>
